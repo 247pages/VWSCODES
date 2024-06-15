@@ -3,23 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download VWS-CODES</title>
-  <link rel="stylesheet" href="download.css">
+  <title>Download App</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .app-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .app-info img {
+      width: 100px; /* Adjust size as needed */
+      height: 100px;
+      margin-right: 15px;
+      border-radius: 8px;
+    }
+
+    .app-details {
+      flex: 1;
+    }
+
+    .app-details h1 {
+      margin: 0; /* Remove default margin */
+      font-size: 24px; /* Adjust font size */
+      line-height: 1.2; /* Ensure proper line height */
+    }
+
+    .app-details p {
+      margin: 5px 0; /* Adjust spacing */
+    }
+
+    .app-details a {
+      color: #007bff; /* Link color */
+      text-decoration: none;
+    }
+
+    .app-details a:hover {
+      text-decoration: underline;
+    }
+
+    .download-section {
+      margin-bottom: 20px; /* Space below app details */
+    }
+
+    .download-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 60px; /* Adjust padding for button length */
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 20px; /* Curved edges */
+      transition: background-color 0.3s ease; /* Smooth hover transition */
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .download-button:hover {
+      background-color: #45a049;
+    }
+
+    .screenshots {
+      margin-bottom: 30px;
+    }
+
+    .screenshot-gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .screenshot-gallery img {
+      width: 300px; /* Adjust size as needed */
+      height: auto;
+      scroll-snap-align: start;
+      margin-right: 10px;
+      border-radius: 8px;
+      opacity: 0; /* Initially hide images */
+      transition: opacity 0.3s ease; /* Smooth transition */
+    }
+
+    .screenshot-gallery img.loaded {
+      opacity: 1; /* Display images when loaded */
+    }
+
+    .about {
+      margin-bottom: 30px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .app-info img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .app-details h1 {
+        font-size: 20px;
+      }
+
+      .download-button {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .screenshot-gallery img {
+        width: 250px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="app-info">
-      <img src="/VWSCODES/vws-codesIcon.png" alt="App Icon">
+      <img src="/DownloadPage/icon.png" alt="App Icon">
       <div class="app-details">
-        <h1>VWS-CODES</h1>
-        <p><a href="#">by SpeeDaily</a></p>
-        <p>| 321KB | Rated for 3+ |</p>
+        <h1>App Name</h1>
+        <p><a href="#">Developer Name</a></p>
+        <p>| App Size | Rated for 3+ |</p>
       </div>
     </div>
   </header>
   
   <section class="download-section">
-    <button class="download-button">Download</button>
+    <button class="download-button" id="installButton">Download</button>
   </section>
   
   <section class="screenshots">
@@ -38,28 +164,36 @@
   </section>
   
   <footer>
-    <p>&copy; 2024 Speedaily. All rights reserved.</p>
+    <p>&copy; 2024 Your App Name. All rights reserved.</p>
   </footer>
-  <button class="download-button" onclick="installPWA()">Download</button>
-
-<script>
-function installPWA() {
-  if ('install' in navigator) {
-    const manifestUrl = '/manifest.json';
-    navigator.install(manifestUrl)
-      .then(() => {
-        console.log('PWA installation successful');
-      })
-      .catch((error) => {
-        console.error('PWA installation failed:', error);
-      });
-  } else {
-    console.error('Install API not supported');
-  }
-}
-</script>
-
   
-  <script src="download.js"></script>
+  <script>
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      event.preventDefault();
+      // Stash the event so it can be triggered later.
+      deferredPrompt = event;
+      // Update UI notify the user they can add to home screen
+      document.getElementById('installButton').style.display = 'block';
+    });
+
+    const installButton = document.getElementById('installButton');
+
+    installButton.addEventListener('click', () => {
+      // Show the prompt
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    });
+  </script>
 </body>
 </html>
