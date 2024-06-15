@@ -9,12 +9,12 @@
   "description": "",
   "icons": [
     {
-      "src": "/ZipGlide/ZG-192.png",
+      "src": "/VWSCODES/192vwscodes.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/ZipGlide/ZG-512.png",
+      "src": "/VWSCODES/512vwscodes.png",
       "sizes": "512x512",
       "type": "image/png"
     }
