@@ -38,8 +38,27 @@
   </section>
   
   <footer>
-    <p>&copy; 2024 Your App Name. All rights reserved.</p>
+    <p>&copy; 2024 Speedaily. All rights reserved.</p>
   </footer>
+  <button class="download-button" onclick="installPWA()">Download</button>
+
+<script>
+function installPWA() {
+  if ('install' in navigator) {
+    const manifestUrl = '/manifest.json';
+    navigator.install(manifestUrl)
+      .then(() => {
+        console.log('PWA installation successful');
+      })
+      .catch((error) => {
+        console.error('PWA installation failed:', error);
+      });
+  } else {
+    console.error('Install API not supported');
+  }
+}
+</script>
+
   
   <script src="download.js"></script>
 </body>
