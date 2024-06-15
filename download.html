@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="manifest" href="manifest.json">
   <title>Download App</title>
   <style>
     /* General styles */
@@ -138,7 +139,7 @@
       <img src="/DownloadPage/icon.png" alt="App Icon">
       <div class="app-details">
         <h1>App Name</h1>
-        <p><a href="#">Developer Name</a></p>
+        <p><a href="#">Deeloper Name</a></p>
         <p>| App Size | Rated for 3+ |</p>
       </div>
     </div>
@@ -167,33 +168,33 @@
     <p>&copy; 2024 Your App Name. All rights reserved.</p>
   </footer>
   
-  <script>
-    let deferredPrompt;
+<script>
+  let deferredPrompt;
 
-    window.addEventListener('beforeinstallprompt', (event) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      event.preventDefault();
-      // Stash the event so it can be triggered later.
-      deferredPrompt = event;
-      // Update UI notify the user they can add to home screen
-      document.getElementById('installButton').style.display = 'block';
-    });
+window.addEventListener('beforeinstallprompt', (event) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  event.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = event;
+  // Update UI notify the user they can add to home screen
+  document.getElementById('installButton').style.display = 'block';
+});
 
-    const installButton = document.getElementById('installButton');
+const installButton = document.getElementById('installButton');
 
-    installButton.addEventListener('click', () => {
-      // Show the prompt
-      deferredPrompt.prompt();
-      // Wait for the user to respond to the prompt
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
-    });
-  </script>
+installButton.addEventListener('click', () => {
+  // Show the prompt
+  deferredPrompt.prompt();
+  // Wait for the user to respond to the prompt
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+    } else {
+      console.log('User dismissed the install prompt');
+    }
+    deferredPrompt = null;
+  });
+});
+</script>
 </body>
 </html>
